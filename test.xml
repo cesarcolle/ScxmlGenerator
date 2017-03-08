@@ -1,0 +1,39 @@
+
+<scxml xmlns="http://www.w3.org/2005/07/scxml" initial="Initial" >
+    <state id="Initial">
+        <transition event="BatteryOn">
+            <target next="Unarmed"/>
+        </transition>
+    </state>
+
+    <state id="Unarmed">
+        <onentry>
+            <function name="StopUnarmTimer"/>
+        </onentry>
+        <transition event="RemoteArm">
+            <target next="Armed"/>
+        </transition>
+    </state>
+
+    <state id="Armed">
+        <onentry>
+            <function name="LockDoors"/>
+        </onentry>
+        <transition event="RemoteUnarm">
+            <target next="WaitingToUnarm"/>
+        </transition>
+    </state>
+
+    <state id="WaitingToUnarm">
+        <onentry>
+            <function name="UnlockDoors"/>
+            <function name="StartTimer"/>
+        </onentry>
+        <transition event="DoorsOpen">
+            <target next="Unarmed"/>
+        </transition>
+        <transition event="UnarmTimerExpired">
+            <target next="Armed"/>
+        </transition>
+    </state>
+</scxml>
