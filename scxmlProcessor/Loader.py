@@ -17,17 +17,16 @@ informations = dict()
 class Loader:
     def __init__(self, path):
         self.machine = StateMachine(path)
-        f = lambda key, g: print(key, g)
-        self.data = reduce(f , self.machine.doc.stateDict.keys())
         self.data = dict()
-
 
     def generateTransition(self):
         self.t = Transition(self.machine.doc.rootState)
         for key in self.machine.doc.stateDict:
             tmp = Transition(self.machine.doc.stateDict[key])
-            for transition in tmp:
-                self.data[key] = self.data[key] + list("".join(re.search("(?<==).*?")))
+            self.data[key] = list()
+            for transition in tmp.source.transition:
+                self.data[key] += [{ "event" : transition.event, "target" : transition.target}]
+
 
 
     def __str__(self):
@@ -40,3 +39,4 @@ class Loader:
 if __name__ == "__main__":
     l = Loader("../test.xml")
     l.generateTransition()
+    print(l.data)

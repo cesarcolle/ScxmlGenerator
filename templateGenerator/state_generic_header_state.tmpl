@@ -6,15 +6,14 @@
 */
 
 
-\#include "sm_state_${state["nom"}.h"
 
 
+class SM_State_${state.id} : SM_state {
 
-SM_State_${state.id}::SM_State_${state["id"} ()
-{}
+    ~SM_State_${state["nom"]} ()
+};
 
-SM_State_${state.id}::~SM_State_${state["nom"} ()
-{}
+
 
 void SM_State_${state.id}::onentry(){
     $for actions in state["transition"]["onentry"]

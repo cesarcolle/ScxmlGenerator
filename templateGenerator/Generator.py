@@ -5,8 +5,6 @@ from scxmlProcessor.Loader import Loader
 
 
 class Generator:
-
-
     def generateChart(self, stateChartXML, fileName, template):
         template.state = stateChartXML
         self.generateOutputFile(fileName, template)
@@ -25,6 +23,6 @@ if __name__ == '__main__':
     template = state_generic_template()
     generator = Generator()
 
-    generator.generateChart(loader.test,
+    generator.generateChart(loader,
                             './test.out',
                             template)
