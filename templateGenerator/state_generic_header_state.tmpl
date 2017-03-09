@@ -1,6 +1,6 @@
 /*
 *
-*  state_${state.nom}
+*  state_$state.nom
 *  author @cesarColle
 *
 */
@@ -8,14 +8,11 @@
 
 
 
-class SM_State_${state.id} : SM_state {
+class SM_State_$nom : SM_state {
 
-    ~SM_State_${state["nom"]} ()
+    ~SM_State_$nom ()
+    void SM_State_$nom::onentry();
 };
 
 
 
-void SM_State_${state.id}::onentry(){
-    $for actions in state["transition"]["onentry"]
-    ${state["transition"]["onentry"]}();
-}

@@ -1,10 +1,13 @@
 ####  Generator class will generate via Cheetah template some files .
 
-from state_generic_template import state_generic_template
 from scxmlProcessor.Loader import Loader
+from Cheetah.Template import Template
 
 
 class Generator:
+    def __init__(self, path):
+        self.loader = Loader(path)
+
     def generateChart(self, stateChartXML, fileName, template):
         template.state = stateChartXML
         self.generateOutputFile(fileName, template)
@@ -17,12 +20,26 @@ class Generator:
         finally:
             outputFile.close()
 
+    def generateSources(self):
+        self.loader.generateTransition()
+        value = ""
+        try:
+            f = open("state_generic_template.tmpl", "r")
+            value = f.read()
+            f.close()
+        except IOError:
+            print "eerror opening the file"
+
+        for state in self.loader.data:
+            v = ""
+            print self.loader.data[state]
+            if len(self.loader.data[state]) > 0:
+                v = self.loader.data[state][0]
+            temp = Template(value, searchList={"nom": state, "params" : v})
+            self.generateOutputFile(state + ".cpp", temp)
+
+            print "writting"
+
 
 if __name__ == '__main__':
-    loader = Loader("../test.xml")
-    template = state_generic_template()
-    generator = Generator()
-
-    generator.generateChart(loader,
-                            './test.out',
-                            template)
+    generator = Generator("../test.xml").generateSources()

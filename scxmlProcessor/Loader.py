@@ -26,9 +26,6 @@ class Loader:
             self.data[key] = list()
             for transition in tmp.source.transition:
                 self.data[key] += [{ "event" : transition.event, "target" : transition.target}]
-
-
-
     def __str__(self):
         l = ""
         for s in self.machine.doc.stateDict["Initial"].transition:
@@ -39,4 +36,3 @@ class Loader:
 if __name__ == "__main__":
     l = Loader("../test.xml")
     l.generateTransition()
-    print(l.data)
