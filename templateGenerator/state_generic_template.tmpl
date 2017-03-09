@@ -1,0 +1,21 @@
+/*
+*
+*  state_${state.nom}
+*  author @cesarColle
+*
+*/
+
+
+\#include "sm_state_${state.nom}.h"
+
+
+
+SM_State_${state.id}::SM_State_${state.id} ()
+{}
+
+SM_State_${state.id}::~SM_State_${state.id} ()
+{}
+
+void SM_State_${state.id}::onentry(){
+    return new ${state.transition}()
+}

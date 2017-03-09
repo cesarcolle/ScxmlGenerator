@@ -1,3 +1,21 @@
+/*
+*
+*  state_machine
+*  author @cesarColle
+*
+*/
+
+
+#include "sm_state_machine.h"
 
 
 
+SM_State_45::SM_State_45 ()
+{}
+
+SM_State_45::~SM_State_45 ()
+{}
+
+void SM_State_45::onentry(){
+
+}
