@@ -9,5 +9,5 @@ class TemplateProvider :
             value = f.read()
             f.close()
         except IOError:
-            print "eerror opening the file"
+            print "error opening the file"
         return Template(value, data)

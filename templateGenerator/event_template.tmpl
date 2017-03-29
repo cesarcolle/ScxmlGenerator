@@ -1,8 +1,7 @@
 
 
-enum {
+event = dict()
 #for event in $events
-    $event,
+event["$event"] = "$event"
 #end for
-    $final
-}
+event["$final"] = "$final"

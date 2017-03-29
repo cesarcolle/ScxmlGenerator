@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" binding="early" name="initialTest.scxml" qt:editorversion="4.2.1" xmlns:qt="http://www.qt.io/2015/02/scxml-ext">
+    <state id="State_1">
+        <qt:editorinfo scenegeometry="225.74;305.10;109.67;111.98;362.03;310" geometry="225.74;305.10;-116.07;-193.12;362.03;310"/>
+        <state id="init">
+            <qt:editorinfo scenegeometry="189.67;300.98;129.67;250.98;120;100" geometry="-36.07;-4.12;-60;-50;120;100"/>
+            <transition type="external" event="t1" target="pass" cond="e">
+                <qt:editorinfo endTargetFactors="9.07;48.22"/>
+            </transition>
+        </state>
+        <state id="pass">
+            <qt:editorinfo scenegeometry="391.70;302.01;331.70;252.01;120;100" geometry="165.96;-3.09;-60;-50;120;100"/>
+            <transition type="external" event="t3" target="init">
+                <qt:editorinfo endTargetFactors="84.10;76.66" startTargetFactors="11.03;75.54"/>
+                <send event="e3"/>
+            </transition>
+        </state>
+        <transition type="external" event="t2" target="fail" cond="e">
+            <qt:editorinfo endTargetFactors="26.05;34.84"/>
+        </transition>
+    </state>
+    <state id="fail">
+        <qt:editorinfo scenegeometry="655.57;286.56;595.57;236.56;120;100" geometry="655.57;286.56;-60;-50;120;100"/>
+    </state>
+</scxml>

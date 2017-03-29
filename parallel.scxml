@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" binding="early" name="parallel" qt:editorversion="4.2.1" xmlns:qt="http://www.qt.io/2015/02/scxml-ext">
+    <parallel id="Parallel_1">
+        <qt:editorinfo geometry="162.86;262.84;-139.78;-217.04;448.75;482.89" scenegeometry="162.86;262.84;23.08;45.80;448.75;482.89"/>
+        <state id="init">
+            <qt:editorinfo geometry="-4.12;5.16;-60;-146.79;128.47;123.73" scenegeometry="157.71;392.72;97.71;245.93;128.47;123.73"/>
+            <transition type="external" event="truc" target="State_5">
+                <qt:editorinfo endTargetFactors="49.97;10.44"/>
+            </transition>
+        </state>
+        <state id="State_2">
+            <qt:editorinfo geometry="197.90;-78.14;-60;-50;120;100" scenegeometry="359.73;309.42;299.73;259.42;120;100"/>
+            <transition type="external" event="truc" target="State_3">
+                <qt:editorinfo endTargetFactors="59.10;19.79"/>
+            </transition>
+        </state>
+        <state id="State_3">
+            <qt:editorinfo geometry="193.79;59.79;-60;-50;120;100" scenegeometry="356.65;322.63;296.65;272.63;120;100"/>
+            <transition type="external" event="bab" target="final"/>
+        </state>
+        <transition type="external" event="machin" target="State_4">
+            <qt:editorinfo movePoint="-4.13;-2.07"/>
+        </transition>
+        <state id="State_5">
+            <qt:editorinfo geometry="4.13;58.76;-60;-50;120;100" scenegeometry="166.99;321.60;106.99;271.60;120;100"/>
+            <transition type="external" event="truc" target="final">
+                <qt:editorinfo endTargetFactors="28.02;33.12"/>
+            </transition>
+        </state>
+        <state id="final">
+            <qt:editorinfo geometry="116.48;195.85;-60;-50;120;100" scenegeometry="279.34;458.69;219.34;408.69;120;100"/>
+        </state>
+    </parallel>
+    <state id="State_4">
+        <qt:editorinfo geometry="600.94;350.46;-60;-50;120;100" scenegeometry="600.94;350.46;540.94;300.46;120;100"/>
+    </state>
+</scxml>

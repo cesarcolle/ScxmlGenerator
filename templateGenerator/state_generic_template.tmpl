@@ -1,21 +1,20 @@
-/*
-*
-*  state_$nom
-*  author @cesarColle
-*
-*/
-\#include "sm_state_$nom .h"
+#
+#
+#  state_$nom
+#  author @cesarColle
+#
+#
+from threading import Thread
 
-SM_State_$nom::SM_State_$nom ()
-{}
+class SM_$nom:
+    def __init__(self):
+        pass
+    def start(self):
+        onentry()
 
-SM_State_$nom::~SM_State_$nom ()
-{}
 
-void SM_State_$nom::onentry(){
-}
-
-void SM_State_$nom::transition(enum event e){
-#for
-
-}
+    def onentry(self):
+        pass
+    def transition(self, event):
+        pass
+        $transition

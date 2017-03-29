@@ -18,21 +18,8 @@ class Loader:
     def __init__(self, path):
         self.machine = StateMachine(path)
         self.data = dict()
-
-    def generateTransition(self):
-        self.t = Transition(self.machine.doc.rootState)
-        for key in self.machine.doc.stateDict:
-            tmp = Transition(self.machine.doc.stateDict[key])
-            self.data[key] = list()
-            for transition in tmp.source.transition:
-                self.data[key] += [{ "event" : transition.event, "target" : transition.target}]
-    def __str__(self):
-        l = ""
-        for s in self.machine.doc.stateDict["Initial"].transition:
-            informations[s] = {"parent": s.parent}
-        return l
+        self.parent = dict()
 
 
 if __name__ == "__main__":
-    l = Loader("../test.xml")
-    l.generateTransition()
+    l = Loader("../parallel.scxml")
