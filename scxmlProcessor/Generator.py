@@ -59,31 +59,21 @@ class Generator:
                 v = self.data[state]
             # create the cpp source
             source_state = dict()
-
-
             source_state["nom"] = state
-            source_state["transtion"] = transition = TransitionManager().generateIfTransition(v, self.parent[state])
+            source_state["transition"] = TransitionManager().generateIfTransition(v, self.parent[state])
             source_state["parent"] = [x.id for x in self.parent[state]]
-            print source_state
-
+            source_state["dependancies"] = TransitionManager().generateDependance(v)
             # transition = TransitionManager().generateIfTransition(v, self.parent[state])
             self.generateOutputFile(name + ".py", self.tmpl.provideTemplate(templatesFiles["state_source"], \
-                                                                            {"nom": state, \
-                                                                             "transition": transition}))
-            # take the information provided by the state for loop. update the Set event into our object
+                                                                            source_state))
             self.generateEvents(self.data[state])
-            # Generate the Headers File
-            # self.generateOutputFile(name + ".h",
-            #                         self.tmpl.provideTemplate(templatesFiles["state_header"], {"nom": state}))
-
         # Generate the event enum
         lastEvent = ""
         if self.events:
             lastEvent = self.events.pop()
 
         self.generateOutputFile(directory + "event.py", self.tmpl.provideTemplate(templatesFiles["event"],
-                                                                                 {"events": list(self.events),
-                                                                                  "final": lastEvent}))
+                                                                                 source_state))
 
     def generateHierarchy(self):
         pass

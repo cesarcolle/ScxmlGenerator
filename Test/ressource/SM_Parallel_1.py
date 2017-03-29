@@ -1,15 +1,12 @@
-#
-#
-#  state_$nom
+#  state_Parallel_1
 #  author @cesarColle
-#
-#
 from threading import Thread
 from event import *
-$dependancies
+from SM_State_4 import *
 
 
-class SM_$nom:
+
+class SM_Parallel_1:
     def __init__(self):
         pass
 
@@ -21,4 +18,6 @@ class SM_$nom:
 
     def transition(self, event):
         pass
-        $transition
+        if (event == event["machin"]):
+            return State_4()
+

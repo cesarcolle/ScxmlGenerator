@@ -1,15 +1,11 @@
-#
-#
-#  state_$nom
+#  state_State_4
 #  author @cesarColle
-#
-#
 from threading import Thread
 from event import *
-$dependancies
 
 
-class SM_$nom:
+
+class SM_State_4:
     def __init__(self):
         pass
 
@@ -21,4 +17,4 @@ class SM_$nom:
 
     def transition(self, event):
         pass
-        $transition
+        
