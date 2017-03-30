@@ -1,0 +1,25 @@
+
+import abc
+#for state in $states
+from SM_$state import SM_$state
+#end for
+
+class SM:
+    __metaclass__ = abc.ABCMeta
+
+    def start(self):
+        raise NotImplementedError()
+
+    def onentry(self):
+        raise NotImplementedError()
+
+    def transition(self, event):
+        raise NotImplementedError()
+
+
+
+
+if __name__ == "__main__":
+    #for state in $states
+    SM.register(SM_$state)
+    #end for

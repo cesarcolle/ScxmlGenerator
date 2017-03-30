@@ -9,7 +9,8 @@ import os
 
 templatesFiles = {"state_source": "state_generic_template.tmpl", \
                   "event": "event_template.tmpl", \
-                  "state_header": "state_generic_header_state.tmpl"}
+                  "state_header": "state_generic_header_state.tmpl", \
+                  "main": "mainSmProcessus.tmpl"}
 
 
 class Generator:
@@ -32,6 +33,9 @@ class Generator:
 
             # generate the Events from the scxml machine
 
+    def generateMainSource(self):
+        pass
+
     def generateTransition(self):
         # recover transition from the initial state.
         self.t = Transition(self.loader.machine.doc.rootState)
@@ -52,28 +56,36 @@ class Generator:
     def generateSources(self, directory):
 
         #   del self.loader.data["__main__"]
+        allNameState = list()
         for state in self.data:
             name = directory + "SM_" + state
             v = ""
             if self.data[state]:
                 v = self.data[state]
-            # create the cpp source
+            # recover all data from one state
+            # here all names
+            allNameState += [state]
+
             source_state = dict()
+            # label of the state
             source_state["nom"] = state
+            # transition of the state
             source_state["transition"] = TransitionManager().generateIfTransition(v, self.parent[state])
+            # parents or the state
             source_state["parent"] = [x.id for x in self.parent[state]]
+
+            # create the source code to import dependancies
             source_state["dependancies"] = TransitionManager().generateDependance(v)
-            # transition = TransitionManager().generateIfTransition(v, self.parent[state])
             self.generateOutputFile(name + ".py", self.tmpl.provideTemplate(templatesFiles["state_source"], \
                                                                             source_state))
+
             self.generateEvents(self.data[state])
         # Generate the event enum
-        lastEvent = ""
-        if self.events:
-            lastEvent = self.events.pop()
-
         self.generateOutputFile(directory + "event.py", self.tmpl.provideTemplate(templatesFiles["event"],
-                                                                                 source_state))
+                                                                                  {"events" : self.events}))
+        print (allNameState)
+        self.generateOutputFile(directory + "main.py", self.tmpl.provideTemplate(templatesFiles["main"], \
+                                                                                 {"states" :allNameState}))
 
     def generateHierarchy(self):
         pass
