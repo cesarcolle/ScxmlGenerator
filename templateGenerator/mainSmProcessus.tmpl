@@ -17,7 +17,14 @@ class SM:
     def transition(self, event):
         raise NotImplementedError()
 
+#{from itertools import izip}
 
+a = {
+#for attribut in $states[:-1]
+"$attribut" : SM_$attribut,
+ #end for
+ "$state[-1]" : SM_$states[-1]
+}
 
 
 if __name__ == "__main__":

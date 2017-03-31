@@ -21,9 +21,9 @@ class Generator:
         self.data = dict()
         self.parent = dict()
         self.generateTransition()
+        self.familly = FamillyManager(self.loader.machine.doc.stateDict)
         self.tmpl = TemplateProvider()
         self.events = set()
-        self.familly = FamillyManager(self.loader.machine.doc.stateDict)
 
     # write the template content into a filename.
     def generateOutputFile(self, fileName, template):
@@ -33,11 +33,6 @@ class Generator:
             outputFile.close()
         except IOError:
             print "erreur opening file"
-
-            # generate the Events from the scxml machine
-
-    def generateMainSource(self):
-        pass
 
     def generateTransition(self):
         # recover transition from the initial state.
@@ -87,11 +82,13 @@ class Generator:
         # Generate the event enum
         self.generateOutputFile(directory + "event.py", self.tmpl.provideTemplate(templatesFiles["event"],
                                                                                   {"events": self.events}))
+
         self.generateOutputFile(directory + "main.py", self.tmpl.provideTemplate(templatesFiles["main"], \
                                                                                  {"states": allNameState}))
 
-        self.generateOutputFile(directory + "sharedStruture.py", self.tmpl.provideTemplate(templatesFiles["sharedStruture"],\
-                                                                                           {"fathers" : self.familly.takeAllFather()}))
+        self.generateOutputFile(directory + "sharedStruture.py",
+                                self.tmpl.provideTemplate(templatesFiles["sharedStruture"], \
+                                                          {"fathers": self.familly.takeAllFather()}))
 
     def generateHierarchy(self):
         pass
@@ -100,4 +97,4 @@ class Generator:
 if __name__ == '__main__':
     os.system("cd ../Test/ressource && rm *.py")
 
-    generator = Generator("../parallel.scxml").generateSources("../Test/ressource/")
+    generator = Generator("../goal.scxml").generateSources("../Test/ressource/")
