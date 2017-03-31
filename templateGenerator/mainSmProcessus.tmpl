@@ -19,7 +19,7 @@ class SM:
 
 #{from itertools import izip}
 
-a = {
+statesItem = {
 #for attribut in $states[:-1]
 "$attribut" : SM_$attribut,
  #end for
@@ -31,3 +31,4 @@ if __name__ == "__main__":
     #for state in $states
     SM.register(SM_$state)
     #end for
+    stateMachine = statesItem["$ancestor"]

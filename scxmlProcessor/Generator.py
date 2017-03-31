@@ -20,6 +20,7 @@ class Generator:
         self.loader = Loader(path)
         self.data = dict()
         self.parent = dict()
+        self.ancestor = self.loader.machine.doc.getRoot().initial[0]
         self.generateTransition()
         self.familly = FamillyManager(self.loader.machine.doc.stateDict)
         self.tmpl = TemplateProvider()
@@ -84,7 +85,8 @@ class Generator:
                                                                                   {"events": self.events}))
 
         self.generateOutputFile(directory + "main.py", self.tmpl.provideTemplate(templatesFiles["main"], \
-                                                                                 {"states": allNameState}))
+                                                                                 {"states": allNameState,
+                                                                                  "ancestor" : self.ancestor}))
 
         self.generateOutputFile(directory + "sharedStruture.py",
                                 self.tmpl.provideTemplate(templatesFiles["sharedStruture"], \
