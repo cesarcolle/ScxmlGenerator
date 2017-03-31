@@ -1,6 +1,7 @@
 ####  Generator class will generate via Cheetah template some files .
 from scxml.node import Transition
 
+from scxmlProcessor.FamillyManager import FamillyManager
 from scxmlProcessor.Loader import Loader
 from templateGenerator.TemplateProvider import TemplateProvider
 from templateGenerator.TransitionManager import TransitionManager
@@ -10,7 +11,8 @@ import os
 templatesFiles = {"state_source": "state_generic_template.tmpl", \
                   "event": "event_template.tmpl", \
                   "state_header": "state_generic_header_state.tmpl", \
-                  "main": "mainSmProcessus.tmpl"}
+                  "main": "mainSmProcessus.tmpl", \
+                  "sharedStruture": "sharedStructure.tmpl"}
 
 
 class Generator:
@@ -21,6 +23,7 @@ class Generator:
         self.generateTransition()
         self.tmpl = TemplateProvider()
         self.events = set()
+        self.familly = FamillyManager(self.loader.machine.doc.stateDict)
 
     # write the template content into a filename.
     def generateOutputFile(self, fileName, template):
@@ -38,6 +41,7 @@ class Generator:
 
     def generateTransition(self):
         # recover transition from the initial state.
+        # His job is to inialize the value of all data.
         self.t = Transition(self.loader.machine.doc.rootState)
         del self.loader.machine.doc.stateDict["__main__"]
         for key in self.loader.machine.doc.stateDict:
@@ -72,7 +76,7 @@ class Generator:
             # transition of the state
             source_state["transition"] = TransitionManager().generateIfTransition(v, self.parent[state])
             # parents or the state
-            source_state["parent"] = [x.id for x in self.parent[state]]
+            source_state["parent"] = self.familly.takeFather(state)
 
             # create the source code to import dependancies
             source_state["dependancies"] = TransitionManager().generateDependance(v)
@@ -82,10 +86,12 @@ class Generator:
             self.generateEvents(self.data[state])
         # Generate the event enum
         self.generateOutputFile(directory + "event.py", self.tmpl.provideTemplate(templatesFiles["event"],
-                                                                                  {"events" : self.events}))
-        print (allNameState)
+                                                                                  {"events": self.events}))
         self.generateOutputFile(directory + "main.py", self.tmpl.provideTemplate(templatesFiles["main"], \
-                                                                                 {"states" :allNameState}))
+                                                                                 {"states": allNameState}))
+
+        self.generateOutputFile(directory + "sharedStruture.py", self.tmpl.provideTemplate(templatesFiles["sharedStruture"],\
+                                                                                           {"fathers" : self.familly.takeAllFather()}))
 
     def generateHierarchy(self):
         pass
