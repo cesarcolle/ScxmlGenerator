@@ -9,6 +9,9 @@
             </transition>
         </state>
         <state id="State_2">
+            <onexit>
+                <log expr="here I am"/>
+            </onexit>
             <qt:editorinfo geometry="197.90;-78.14;-60;-50;120;100" scenegeometry="360.76;184.70;300.76;134.70;120;100"/>
             <transition type="external" event="truc" target="State_3">
                 <qt:editorinfo endTargetFactors="59.10;19.79"/>

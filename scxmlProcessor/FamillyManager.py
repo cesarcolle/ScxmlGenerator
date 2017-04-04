@@ -21,9 +21,7 @@ class FamillyManager:
             # check if he is a father
 
             if self.data[state].state:
-
                 self.fathers += [state]
-
             # add child
             for child in self.data[state].state:
                 self.familly[child.id] += [state]
@@ -36,9 +34,15 @@ class FamillyManager:
     def takeAllFather(self):
         return self.fathers
 
+    # def initialOfFather(self):
+    #     for father in self.fathers:
+    #         stateFather = self.fathers[father]
+    #         for state in stateFather.state:
+    #
+
+
 
 if __name__ == "__main__":
-    l = Loader.Loader("../goal.scxml")
+    l = Loader.Loader("../bigTest.scxml")
     f = FamillyManager(l.machine.doc.stateDict)
-    print f.familly
-    print f.fathers
+

@@ -18,4 +18,4 @@ class Loader:
 
 
 if __name__ == "__main__":
-    l = Loader("../goal.scxml")
+    l = Loader("../very_simple.scxml")

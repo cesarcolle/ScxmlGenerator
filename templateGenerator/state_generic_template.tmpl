@@ -4,19 +4,19 @@
 #  author @cesarColle
 #
 #
-from threading import Thread
-from event import *
-$dependancies
-
 # sendQueue for manage sending event
-## from sharedStruture import sendQueue
 
-#if len($parent) > 0
-# from sharedStruture import RaiseQueue_$parent[0]
-#end if
+from sharedStruture import sendQueue
+
+
 
 class SM_$nom:
     def __init__(self):
+        #if len($parent) > 0
+        from sharedStruture import RaiseQueue_$parent[0]
+        #end if
+        self.onentryAction = lambda: None
+        self.onentryActions = lambda: None
         pass
 
     def start(self):
@@ -26,11 +26,32 @@ class SM_$nom:
         pass
         # execute code here
 
-        # catch event from different sources
+    def log(self):
+        pass
+    def onentryAction(self, f):
+        self.onentryAction = f
+
+    def onexitAction(self, f):
+        self.onexitAction = f
+
+    def onentry(self, params=None):
+        pass
+        self.onentryAction(params)
+
+    def onexit(self, params=None):
+        self.onexitAction(params)
+        if not sendQueue.empty() :
+            self.transition(sendQueue.get())
+        #if len($parent) > 0
+        if not RaiseQueue_${parent[0]}.empty() :
+            self.transition(RaiseQueue_${parent[0]}.get())
+        #end if
 
 
-
+    def send(event):
+        sendQueue.put(event)
 
     def transition(self, event):
         pass
+        self.onexit()
         $transition

@@ -1,9 +1,13 @@
 
 import abc
+#{from itertools import izip}
 
-#for state in $states
-from SM_$state import SM_$state
-#end for
+statesItem = {
+#for attribut in $states[:-1]
+"$attribut" : SM_${attribut}(),
+ #end for
+ "$states[-1]" : SM_${states[-1]}()
+}
 
 class SM:
     __metaclass__ = abc.ABCMeta
@@ -17,14 +21,6 @@ class SM:
     def transition(self, event):
         raise NotImplementedError()
 
-#{from itertools import izip}
-
-statesItem = {
-#for attribut in $states[:-1]
-"$attribut" : SM_$attribut,
- #end for
- "$state[-1]" : SM_$states[-1]
-}
 
 
 if __name__ == "__main__":
@@ -32,3 +28,4 @@ if __name__ == "__main__":
     SM.register(SM_$state)
     #end for
     stateMachine = statesItem["$ancestor"]
+    stateMachine = stateMachine.transition("truc")

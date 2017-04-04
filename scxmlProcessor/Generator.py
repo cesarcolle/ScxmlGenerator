@@ -20,26 +20,29 @@ class Generator:
         self.loader = Loader(path)
         self.data = dict()
         self.parent = dict()
-        self.ancestor = self.loader.machine.doc.getRoot().initial[0]
+        print(self.loader.machine.doc.rootState.initial)
+        self.ancestor = self.loader.machine.doc.rootState.initial[0]
         self.generateTransition()
         self.familly = FamillyManager(self.loader.machine.doc.stateDict)
         self.tmpl = TemplateProvider()
         self.events = set()
 
     # write the template content into a filename.
-    def generateOutputFile(self, fileName, template):
+    def generateOutputFile(self, fileName, template, option='w'):
         try:
-            outputFile = open(fileName, 'w')
+            outputFile = open(fileName, option)
             outputFile.write(str(template))
             outputFile.close()
         except IOError:
-            print "erreur opening file"
+            print
+            "erreur opening file"
 
     def generateTransition(self):
         # recover transition from the initial state.
         # His job is to inialize the value of all data.
         self.t = Transition(self.loader.machine.doc.rootState)
         del self.loader.machine.doc.stateDict["__main__"]
+        # we recovering all transition
         for key in self.loader.machine.doc.stateDict:
             tmp = Transition(self.loader.machine.doc.stateDict[key])
             self.parent[key] = self.loader.machine.doc.stateDict[key].parent
@@ -57,6 +60,7 @@ class Generator:
 
         #   del self.loader.data["__main__"]
         allNameState = list()
+        templates = ""
         for state in self.data:
             name = directory + "SM_" + state
             v = ""
@@ -76,21 +80,25 @@ class Generator:
 
             # create the source code to import dependancies
             source_state["dependancies"] = TransitionManager().generateDependance(v)
-            self.generateOutputFile(name + ".py", self.tmpl.provideTemplate(templatesFiles["state_source"], \
-                                                                            source_state))
+            templates += str(self.tmpl.provideTemplate(templatesFiles["state_source"], source_state))
+            #                                                                 source_state)
+            # self.generateOutputFile(directory + state + ".py", )
 
             self.generateEvents(self.data[state])
         # Generate the event enum
         self.generateOutputFile(directory + "event.py", self.tmpl.provideTemplate(templatesFiles["event"],
                                                                                   {"events": self.events}))
 
-        self.generateOutputFile(directory + "main.py", self.tmpl.provideTemplate(templatesFiles["main"], \
-                                                                                 {"states": allNameState,
-                                                                                  "ancestor" : self.ancestor}))
+
 
         self.generateOutputFile(directory + "sharedStruture.py",
                                 self.tmpl.provideTemplate(templatesFiles["sharedStruture"], \
                                                           {"fathers": self.familly.takeAllFather()}))
+        self.generateOutputFile(directory + "fsm.py", templates)
+        mainValue = self.tmpl.provideTemplate(templatesFiles["main"],
+                                  {"states": allNameState,
+                                   "ancestor": self.ancestor})
+        self.generateOutputFile(directory + "fsm.py", mainValue, option='a')
 
     def generateHierarchy(self):
         pass
@@ -99,4 +107,4 @@ class Generator:
 if __name__ == '__main__':
     os.system("cd ../Test/ressource && rm *.py")
 
-    generator = Generator("../goal.scxml").generateSources("../Test/ressource/")
+    generator = Generator("../very_simple.scxml").generateSources("../Test/ressource/")
