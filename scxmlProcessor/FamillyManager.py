@@ -43,6 +43,6 @@ class FamillyManager:
 
 
 if __name__ == "__main__":
-    l = Loader.Loader("../bigTest.scxml")
+    l = Loader.Loader("../bigTest2.scxml")
     f = FamillyManager(l.machine.doc.stateDict)
 

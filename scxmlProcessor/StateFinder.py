@@ -11,7 +11,6 @@ class StateFinder:
     def findHierachy(self):
         tmp = self.stateDict
         self.stateDict = self.stateDict.stateDict
-        self.findFirstState(tmp.rootState)
 
 if __name__ == "__main__":
     l = Generator("../bigTest2.scxml")

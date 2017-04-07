@@ -1,5 +1,5 @@
 
-import abc
+
 #{from itertools import izip}
 
 statesItem = {
@@ -8,20 +8,6 @@ statesItem = {
  #end for
  "$states[-1]" : SM_${states[-1]}()
 }
-
-class SM:
-    __metaclass__ = abc.ABCMeta
-
-    def start(self):
-        raise NotImplementedError()
-
-    def onentry(self):
-        raise NotImplementedError()
-
-    def transition(self, event):
-        raise NotImplementedError()
-
-
 
 if __name__ == "__main__":
     #for state in $states

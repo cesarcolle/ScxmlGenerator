@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" binding="early" xmlns:qt="http://www.qt.io/2015/02/scxml-ext" name="parallel" qt:editorversion="4.2.1" initial="State_test">
+    <state id="State_4">
+        <qt:editorinfo geometry="649.75;508.16;-60;-50;120;100" scenegeometry="649.75;508.16;589.75;458.16;120;100"/>
+    </state>
+    <state id="State_test">
+        <qt:editorinfo geometry="385.82;129.88;-202.35;-270.81;388.21;437.81" scenegeometry="385.82;129.88;183.47;-140.93;388.21;437.81"/>
+        <state id="First Rank">
+            <qt:editorinfo geometry="-55.66;-23.71;-126.69;-180.83;333.68;201.35" scenegeometry="576.51;93.80;449.82;-87.03;333.68;201.35"/>
+            <state id="Second Rank">
+                <qt:editorinfo geometry="126.99;-68.04;-60;-50;120;100" scenegeometry="703.50;25.76;643.50;-24.24;120;100"/>
+            </state>
+            <state id="secondRankJunk">
+                <qt:editorinfo geometry="-46.69;-63.91;-60;-50;120;100" scenegeometry="529.82;29.89;469.82;-20.11;120;100"/>
+            </state>
+        </state>
+        <state id="useless">
+            <qt:editorinfo geometry="-8.25;80.62;-60;-50;120;100" scenegeometry="623.92;198.13;563.92;148.13;120;100"/>
+        </state>
+    </state>
+</scxml>

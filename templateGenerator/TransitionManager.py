@@ -8,12 +8,17 @@ class TransitionManager:
 
     def generateIfTransition(self, data, pere=""):
         value = ""
+
         if not data:
-            return ""
+            return "dict()"
+        trans = dict()
         for transition in data:
             flatList = reduce(lambda l: [item for sublist in l for item in sublist], transition["event"])
-            value += self.createIf(flatList[0], transition["target"][0])
-        return value
+            flatListTarget = reduce(lambda l: [item for sublist in l for item in sublist], transition["target"])
+            trans[flatList[0]] = flatListTarget
+            #value += self.createIf(flatList[0], transition["target"][0])
+        print(trans)
+        return str(trans)
 
     def generateDependance(self, data):
         value = ""

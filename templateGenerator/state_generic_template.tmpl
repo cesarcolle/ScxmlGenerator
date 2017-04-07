@@ -1,22 +1,33 @@
-#
-#
-#  state_$nom
-#  author @cesarColle
-#
-#
-# sendQueue for manage sending event
 
 from sharedStruture import sendQueue
 
+import abc
 
+class SM:
+    __metaclass__ = abc.ABCMeta
 
-class SM_$nom:
+    def start(self):
+        raise NotImplementedError()
+
+    def onentry(self):
+        raise NotImplementedError()
+
+    def transition(self, event):
+        raise NotImplementedError()
+
+    def send(self, event):
+        sendQueue.put(event)
+
+#for s in $statement
+
+#if len($s["parent"]) > 0
+from sharedStruture import RaiseQueue_$s["parent"][0]
+#end if
+class SM_$s["nom"] (SM):
     def __init__(self):
-        #if len($parent) > 0
-        from sharedStruture import RaiseQueue_$parent[0]
-        #end if
         self.onentryAction = lambda: None
         self.onentryActions = lambda: None
+        self.transitions = $s["transition"]
         pass
 
     def start(self):
@@ -28,6 +39,7 @@ class SM_$nom:
 
     def log(self):
         pass
+
     def onentryAction(self, f):
         self.onentryAction = f
 
@@ -39,19 +51,33 @@ class SM_$nom:
         self.onentryAction(params)
 
     def onexit(self, params=None):
+
         self.onexitAction(params)
         if not sendQueue.empty() :
-            self.transition(sendQueue.get())
-        #if len($parent) > 0
-        if not RaiseQueue_${parent[0]}.empty() :
-            self.transition(RaiseQueue_${parent[0]}.get())
+            return self.transition(sendQueue.get())
+        #if len($s["parent"]) > 0
+        if not RaiseQueue_${$s["parent"][0]}.empty() :
+            return self.transition(RaiseQueue_${$s["parent"][0]}.get())
         #end if
 
+    #if len($s["parent"]) > 0
+    def raiseEvent(self, event):
+        RaiseQueue_${$s["parent"][0]}.put(event)
+    #end if
 
-    def send(event):
-        sendQueue.put(event)
+    def jump(self, event):
+        pass
 
     def transition(self, event):
         pass
         self.onexit()
-        $transition
+        #if len(s["transition"]) > 0
+        if event in self.transitions:
+            return statesItem[self.transitions[event]]
+        else:
+            pass
+        #if  len($s["parent"]) > 0
+            SM_${$s["parent"][0]}.transition(event)
+        #end if
+        #end if
+#end for

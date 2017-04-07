@@ -34,8 +34,7 @@ class Generator:
             outputFile.write(str(template))
             outputFile.close()
         except IOError:
-            print
-            "erreur opening file"
+            print("erreur opening file")
 
     def generateTransition(self):
         # recover transition from the initial state.
@@ -51,6 +50,7 @@ class Generator:
                 self.data[key] += [{"event": transition.event, "target": transition.target}]
 
     def generateEvents(self, stateData):
+
         for data in stateData:
             flatList = reduce(lambda l: [item for sublist in l for item in sublist], data["event"])
             # using set because we don't want twice similiar value into our event
@@ -61,6 +61,7 @@ class Generator:
         #   del self.loader.data["__main__"]
         allNameState = list()
         templates = ""
+        statement = {"statement" : []}
         for state in self.data:
             name = directory + "SM_" + state
             v = ""
@@ -80,7 +81,9 @@ class Generator:
 
             # create the source code to import dependancies
             source_state["dependancies"] = TransitionManager().generateDependance(v)
-            templates += str(self.tmpl.provideTemplate(templatesFiles["state_source"], source_state))
+
+            statement["statement"] += [source_state]
+            #templates += str(self.tmpl.provideTemplate(templatesFiles["state_source"], source_state))
             #                                                                 source_state)
             # self.generateOutputFile(directory + state + ".py", )
 
@@ -89,12 +92,12 @@ class Generator:
         self.generateOutputFile(directory + "event.py", self.tmpl.provideTemplate(templatesFiles["event"],
                                                                                   {"events": self.events}))
 
-
-
         self.generateOutputFile(directory + "sharedStruture.py",
                                 self.tmpl.provideTemplate(templatesFiles["sharedStruture"], \
                                                           {"fathers": self.familly.takeAllFather()}))
         self.generateOutputFile(directory + "fsm.py", templates)
+
+        self.generateOutputFile(directory + "fsm.py", self.tmpl.provideTemplate(templatesFiles["state_source"], statement))
         mainValue = self.tmpl.provideTemplate(templatesFiles["main"],
                                   {"states": allNameState,
                                    "ancestor": self.ancestor})
@@ -106,5 +109,4 @@ class Generator:
 
 if __name__ == '__main__':
     os.system("cd ../Test/ressource && rm *.py")
-
     generator = Generator("../very_simple.scxml").generateSources("../Test/ressource/")
