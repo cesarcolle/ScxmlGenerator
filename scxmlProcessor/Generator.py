@@ -16,11 +16,11 @@ templatesFiles = {"state_source": "state_generic_template.tmpl", \
 
 
 class Generator:
+
     def __init__(self, path):
         self.loader = Loader(path)
         self.data = dict()
         self.parent = dict()
-        print(self.loader.machine.doc.rootState.initial)
         self.ancestor = self.loader.machine.doc.rootState.initial[0]
         self.generateTransition()
         self.familly = FamillyManager(self.loader.machine.doc.stateDict)

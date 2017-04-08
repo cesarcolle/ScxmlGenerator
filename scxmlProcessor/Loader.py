@@ -1,7 +1,5 @@
 from __future__ import print_function
 
-import sets
-
 from scxml.pyscxml import StateMachine
 
 ## The loader class allow us to load a SCXML file.
