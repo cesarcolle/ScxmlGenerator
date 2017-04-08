@@ -6,6 +6,7 @@ from scxmlProcessor import Loader
 
 class FamillyManager:
     def __init__(self, dictData):
+        print(dictData)
         self.data = dictData
         self.familly = dict()
         self.fathers = list()
@@ -16,10 +17,8 @@ class FamillyManager:
         # Init the list value of the dictionary key
         for state in self.data:
             self.familly[state] = list()
-
         for state in self.data:
             # check if he is a father
-
             if self.data[state].state:
                 self.fathers += [state]
             # add child
@@ -30,19 +29,16 @@ class FamillyManager:
     def takeFather(self, key):
         return self.familly[key]
 
+
     # return all father
     def takeAllFather(self):
         return self.fathers
 
-    # def initialOfFather(self):
-    #     for father in self.fathers:
-    #         stateFather = self.fathers[father]
-    #         for state in stateFather.state:
-    #
-
 
 
 if __name__ == "__main__":
-    l = Loader.Loader("../bigTest2.scxml")
+    l = Loader.Loader("../hierrachieTest.scxml")
     f = FamillyManager(l.machine.doc.stateDict)
+    print (f.familly)
+    print(f.fathers)
 
