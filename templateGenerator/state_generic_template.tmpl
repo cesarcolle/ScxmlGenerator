@@ -28,6 +28,7 @@ class SM_$s["nom"] (SM):
         self.onentryAction = lambda f : None
         self.onentryActions = lambda f : None
         self.transitions = $s["transition"]
+        self.passed = True
         pass
 
     def log(self):
@@ -46,7 +47,7 @@ class SM_$s["nom"] (SM):
 
     def onexit(self, params=None):
 
-        self.onexitAction(params)
+        # self.onexitAction(params)
         if not sendQueue.empty() :
             return self.transition(sendQueue.get())
         #if len($s["parent"]) > 0
@@ -60,12 +61,14 @@ class SM_$s["nom"] (SM):
     #end if
 
     def jump(self, event):
+        self.passed = False
         if event in self.transitions :
+            print(event, " event in ", "$s["nom"]")
             return self.transition(event)
         else:
             pass
         #if  len($s["parent"]) > 0
-            return SM_${$s["parent"][0]}.jump(event)
+            return statesItem["${$s["parent"][0]}"].jump(event)
         #else
             return None
         #end if
@@ -74,12 +77,13 @@ class SM_$s["nom"] (SM):
         pass
         self.onexit()
         #if s["childToBegin"] is not None
-        state = statesItem["${$s["childToBegin"][0]}"].jump(event)
-        print("semi-succes")
-        if state is not None:
-            return state
+        if self.passed :
+            state = statesItem["${$s["childToBegin"][0]}"].jump(event)
+            print("semi-succes")
+            if state is not None:
+                return state
         #end if
-
+        self.passed = True
         #if len(s["transition"]) > 0
         if event in self.transitions:
             statesItem[self.transitions[event]].onentry()

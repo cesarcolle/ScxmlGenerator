@@ -106,4 +106,4 @@ class Generator:
 
 if __name__ == '__main__':
     os.system("cd ../Test/ressource && rm *.py")
-    generator = Generator("../Test/simple_hierarchie.scxml").generateSources("../Test/ressource/")
+    generator = Generator("../Test/hierarchie_up_transition.scxml").generateSources("../Test/ressource/")
