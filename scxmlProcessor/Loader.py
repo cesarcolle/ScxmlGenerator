@@ -16,4 +16,4 @@ class Loader:
 
 
 if __name__ == "__main__":
-    l = Loader("../very_simple.scxml")
+    l = Loader("../Test/simple_hierarchie.scxml")

@@ -10,6 +10,7 @@ class FamillyManager:
         self.data = dictData
         self.familly = dict()
         self.fathers = list()
+        self.path = dict()
         self.makeFamilly()
         pass
 
@@ -22,6 +23,9 @@ class FamillyManager:
             if self.data[state].state:
                 self.fathers += [state]
             # add child
+
+            self.path[state] = self.data[state].initial
+
             for child in self.data[state].state:
                 self.familly[child.id] += [state]
 
@@ -29,16 +33,17 @@ class FamillyManager:
     def takeFather(self, key):
         return self.familly[key]
 
+    def takeChild(self, key):
+        return self.path[key]
 
     # return all father
     def takeAllFather(self):
         return self.fathers
 
 
-
 if __name__ == "__main__":
-    l = Loader.Loader("../hierrachieTest.scxml")
+    l = Loader.Loader("../Test/bigHierarchy.scxml")
     f = FamillyManager(l.machine.doc.stateDict)
-    print (f.familly)
+    print(f.familly)
     print(f.fathers)
-
+    print("child : ", f.path)

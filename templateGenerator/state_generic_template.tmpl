@@ -25,17 +25,10 @@ from sharedStruture import RaiseQueue_$s["parent"][0]
 #end if
 class SM_$s["nom"] (SM):
     def __init__(self):
-        self.onentryAction = lambda: None
-        self.onentryActions = lambda: None
+        self.onentryAction = lambda f : None
+        self.onentryActions = lambda f : None
         self.transitions = $s["transition"]
         pass
-
-    def start(self):
-        self.onentry()
-
-    def onentry(self):
-        pass
-        # execute code here
 
     def log(self):
         pass
@@ -48,6 +41,7 @@ class SM_$s["nom"] (SM):
 
     def onentry(self, params=None):
         pass
+        print("One entry $s["nom"] ")
         self.onentryAction(params)
 
     def onexit(self, params=None):
@@ -66,18 +60,35 @@ class SM_$s["nom"] (SM):
     #end if
 
     def jump(self, event):
-        pass
+        if event in self.transitions :
+            return self.transition(event)
+        else:
+            pass
+        #if  len($s["parent"]) > 0
+            return SM_${$s["parent"][0]}.jump(event)
+        #else
+            return None
+        #end if
 
     def transition(self, event):
         pass
         self.onexit()
+        #if s["childToBegin"] is not None
+        state = statesItem["${$s["childToBegin"][0]}"].jump(event)
+        print("semi-succes")
+        if state is not None:
+            return state
+        #end if
+
         #if len(s["transition"]) > 0
         if event in self.transitions:
+            statesItem[self.transitions[event]].onentry()
             return statesItem[self.transitions[event]]
         else:
             pass
         #if  len($s["parent"]) > 0
-            SM_${$s["parent"][0]}.transition(event)
+            return statesItem["${$s["parent"][0]}"].jump(event)
         #end if
         #end if
+
 #end for

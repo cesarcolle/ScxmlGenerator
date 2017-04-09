@@ -30,7 +30,7 @@ class Test_Generator(TestCase):
                                                    {"event" : [["Transition_2"]], "target" : ["State_3"]}],
                                       "State_2" : [],
                                       "State_3" : []})
-        
+
     def test_GenerateTransitionExtended(self):
         g = Generator("./Test/simple2.scxml")
         self.assertDictEqual(g.data, {"State_1" : [{"event" : [["Transition_1"]], "target" : ["State_2"]},

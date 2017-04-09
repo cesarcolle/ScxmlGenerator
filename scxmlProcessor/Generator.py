@@ -81,12 +81,9 @@ class Generator:
 
             # create the source code to import dependancies
             source_state["dependancies"] = TransitionManager().generateDependance(v)
+            source_state["childToBegin"] = self.familly.takeChild(state)
 
             statement["statement"] += [source_state]
-            #templates += str(self.tmpl.provideTemplate(templatesFiles["state_source"], source_state))
-            #                                                                 source_state)
-            # self.generateOutputFile(directory + state + ".py", )
-
             self.generateEvents(self.data[state])
         # Generate the event enum
         self.generateOutputFile(directory + "event.py", self.tmpl.provideTemplate(templatesFiles["event"],
@@ -109,4 +106,4 @@ class Generator:
 
 if __name__ == '__main__':
     os.system("cd ../Test/ressource && rm *.py")
-    generator = Generator("../very_simpl.scxml").generateSources("../Test/ressource/")
+    generator = Generator("../Test/simple_hierarchie.scxml").generateSources("../Test/ressource/")

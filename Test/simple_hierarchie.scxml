@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" binding="early" name="simple_hierarchie" qt:editorversion="4.2.1" xmlns:qt="http://www.qt.io/2015/02/scxml-ext">
+    <state id="State_1">
+        <qt:editorinfo scenegeometry="117.51;235.02;4.52;85.25;333.18;274.49" geometry="117.51;235.02;-112.99;-149.77;333.18;274.49"/>
+        <state id="State_2">
+            <qt:editorinfo scenegeometry="84.52;233.99;24.52;183.99;120;100" geometry="-32.99;-1.03;-60;-50;120;100"/>
+            <transition type="external" event="t1" target="succes">
+                <qt:editorinfo endTargetFactors="21.19;47.47"/>
+            </transition>
+        </state>
+        <state id="succes">
+            <qt:editorinfo scenegeometry="257.70;229.70;197.70;179.70;120;100" geometry="140.19;-5.32;-60;-50;120;100"/>
+        </state>
+        <transition type="external" event="t1" target="faillure">
+            <qt:editorinfo endTargetFactors="23.48;41.11" startTargetFactors="93.30;25.70" localGeometry="68.07;4.37"/>
+        </transition>
+    </state>
+    <state id="faillure">
+        <qt:editorinfo scenegeometry="530.84;169.05;470.84;119.05;120;100" geometry="530.84;169.05;-60;-50;120;100"/>
+    </state>
+</scxml>

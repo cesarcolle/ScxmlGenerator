@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" binding="early" name="bigHierarchy" qt:editorversion="4.2.1" xmlns:qt="http://www.qt.io/2015/02/scxml-ext">
+    <state id="State_1">
+        <qt:editorinfo scenegeometry="360.76;248.42;113.57;-72.76;318.33;408.91" geometry="360.76;248.42;-247.19;-321.18;318.33;408.91"/>
+        <state id="State_2">
+            <qt:editorinfo scenegeometry="272.12;202.04;62.45;-50.48;278.33;324.37" geometry="-17.52;-4.12;-209.67;-252.52;278.33;324.37"/>
+            <state id="State_3">
+                <qt:editorinfo scenegeometry="260.78;199.97;82.45;8.98;238.33;244.91" geometry="-11.34;-2.07;-178.33;-190.99;238.33;244.91"/>
+                <state id="State_4">
+                    <qt:editorinfo scenegeometry="220.58;181.42;102.45;63.68;178.13;170.21" geometry="-40.20;-18.55;-118.13;-117.74;178.13;170.21"/>
+                    <state id="State_5">
+                        <qt:editorinfo scenegeometry="182.45;163.89;122.45;113.89;120;100" geometry="-38.13;-17.53;-60;-50;120;100"/>
+                    </state>
+                </state>
+            </state>
+        </state>
+    </state>
+</scxml>
