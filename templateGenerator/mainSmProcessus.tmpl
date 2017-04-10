@@ -14,5 +14,5 @@ if __name__ == "__main__":
     SM.register(SM_$state)
     #end for
     stateMachine = statesItem["$ancestor"]
-    stateMachine = stateMachine.transition("t1")
+    stateMachine = stateMachine.sendEvent("t1")
     print(stateMachine)

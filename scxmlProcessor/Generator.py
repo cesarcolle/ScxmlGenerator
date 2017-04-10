@@ -1,6 +1,7 @@
 ####  Generator class will generate via Cheetah template some files .
 from scxml.node import Transition
 
+from scxmlProcessor.Action import Action
 from scxmlProcessor.FamillyManager import FamillyManager
 from scxmlProcessor.Loader import Loader
 from templateGenerator.TemplateProvider import TemplateProvider
@@ -19,6 +20,7 @@ class Generator:
 
     def __init__(self, path):
         self.loader = Loader(path)
+        self.actions = Action(path)
         self.data = dict()
         self.parent = dict()
         self.ancestor = self.loader.machine.doc.rootState.initial[0]
@@ -78,7 +80,8 @@ class Generator:
             source_state["transition"] = TransitionManager().generateIfTransition(v, self.parent[state])
             # parents or the state
             source_state["parent"] = self.familly.takeFather(state)
-
+            source_state["onentry"] = self.actions.getOnentryAction("onentry", state)
+            source_state["onexit"] = self.actions.getOnentryAction("onexit", state)
             # create the source code to import dependancies
             source_state["dependancies"] = TransitionManager().generateDependance(v)
             source_state["childToBegin"] = self.familly.takeChild(state)
@@ -106,4 +109,4 @@ class Generator:
 
 if __name__ == '__main__':
     os.system("cd ../Test/ressource && rm *.py")
-    generator = Generator("../Test/hierarchie_up_transition.scxml").generateSources("../Test/ressource/")
+    generator = Generator("../Test/raise_test.scxml").generateSources("../Test/ressource/")

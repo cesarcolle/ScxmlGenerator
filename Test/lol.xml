@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml>
+    <state id="State_1">
+        <transition type="external" event="t1" target="fail">
+        </transition>
+    </state>
+    <state id="fail">
+        <transition type="external" event="t2" target="succes">
+        </transition>
+        <onentry>
+            <send event="t2"/>
+        </onentry>
+    </state>
+    <state id="succes">
+    </state>
+</scxml>

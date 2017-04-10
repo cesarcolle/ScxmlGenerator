@@ -6,7 +6,6 @@ from scxmlProcessor import Loader
 
 class FamillyManager:
     def __init__(self, dictData):
-        print(dictData)
         self.data = dictData
         self.familly = dict()
         self.fathers = list()

@@ -12,11 +12,9 @@ class SM:
     def onentry(self):
         raise NotImplementedError()
 
-    def transition(self, event):
+    def sendEvent(self, event):
         raise NotImplementedError()
 
-    def send(self, event):
-        sendQueue.put(event)
 
 #for s in $statement
 
@@ -44,19 +42,39 @@ class SM_$s["nom"] (SM):
         pass
         print("One entry $s["nom"] ")
         self.onentryAction(params)
-
-    def onexit(self, params=None):
-
-        # self.onexitAction(params)
-        if not sendQueue.empty() :
-            return self.transition(sendQueue.get())
+        $s["onentry"]
+        #for e in $s["onentry"]
+        #if len($s["onentry"][$e] ) > 0
+        #for ac in $s["onentry"][$e]
+        self.${e}Event("$ac")
+        #end for
+        #end if
+        #end for
         #if len($s["parent"]) > 0
         if not RaiseQueue_${$s["parent"][0]}.empty() :
-            return self.transition(RaiseQueue_${$s["parent"][0]}.get())
+            return self.sendEvent(RaiseQueue_${$s["parent"][0]}.get())
         #end if
 
-    #if len($s["parent"]) > 0
+    def onexit(self, params=None):
+        #for e in $s["onexit"]
+        #if len($s["onexit"][$e] ) > 0
+        #for ac in $s["onexit"][$e]
+        self.${e}Event("$ac")
+        #end for
+        #end if
+        #end for
+        # self.onexitAction(params)
+        if not sendQueue.empty() :
+            return self.sendEvent(sendQueue.get())
+        #if len($s["parent"]) > 0
+        if not RaiseQueue_${$s["parent"][0]}.empty() :
+            return self.sendEvent(RaiseQueue_${$s["parent"][0]}.get())
+        #end if
+
+
     def raiseEvent(self, event):
+        pass
+    #if len($s["parent"]) > 0
         RaiseQueue_${$s["parent"][0]}.put(event)
     #end if
 
@@ -64,7 +82,7 @@ class SM_$s["nom"] (SM):
         self.passed = False
         if event in self.transitions :
             print(event, " event in ", "$s["nom"]")
-            return self.transition(event)
+            return self.sendEvent(event)
         else:
             pass
         #if  len($s["parent"]) > 0
@@ -73,7 +91,7 @@ class SM_$s["nom"] (SM):
             return None
         #end if
 
-    def transition(self, event):
+    def sendEvent(self, event):
         pass
         self.onexit()
         #if s["childToBegin"] is not None
@@ -86,7 +104,9 @@ class SM_$s["nom"] (SM):
         self.passed = True
         #if len(s["transition"]) > 0
         if event in self.transitions:
-            statesItem[self.transitions[event]].onentry()
+            direct = statesItem[self.transitions[event]].onentry()
+            if direct != None:
+                return direct
             return statesItem[self.transitions[event]]
         else:
             pass
