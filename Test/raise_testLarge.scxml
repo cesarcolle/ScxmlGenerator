@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" binding="early" xmlns:qt="http://www.qt.io/2015/02/scxml-ext" name="raise_test.scxml" qt:editorversion="4.2.1">
+    <state id="Ancestor">
+        <qt:editorinfo scenegeometry="155.65;240.17;71.53;56.92;698.47;402.08" geometry="155.65;240.17;-84.12;-183.25;698.47;402.08"/>
+        <state id="initial">
+            <qt:editorinfo scenegeometry="151.53;227.90;91.53;173.71;178.08;104.60" geometry="-4.12;-12.27;-60;-54.19;178.08;104.60"/>
+            <transition type="external" event="t1" target="faillure">
+                <qt:editorinfo endTargetFactors="28.71;57.72"/>
+            </transition>
+        </state>
+        <state id="faillure">
+            <qt:editorinfo scenegeometry="275.23;215.75;368.73;165.75;120;100" geometry="119.58;-24.42;93.50;-50;120;100"/>
+            <transition type="external" event="t2" target="faillure2">
+                <qt:editorinfo endTargetFactors="12.11;43.50"/>
+            </transition>
+            <onentry>
+                <raise event="t2"/>
+            </onentry>
+        </state>
+        <state id="faillure2">
+            <qt:editorinfo scenegeometry="634.84;223.75;574.84;173.75;120;100" geometry="479.19;-16.42;-60;-50;120;100"/>
+            <transition type="external" event="t3" target="faillure3"/>
+            <onentry>
+                <raise event="t3"/>
+            </onentry>
+        </state>
+        <state id="faillure3">
+            <qt:editorinfo scenegeometry="397;383;337;333;120;100" geometry="241.35;142.83;-60;-50;120;100"/>
+            <transition type="external" event="t4" target="succes"/>
+            <onentry>
+                <send/>
+                <raise event="t4"/>
+            </onentry>
+        </state>
+        <state id="succes">
+            <qt:editorinfo scenegeometry="612.77;389;552.77;339;120;100" geometry="457.12;148.83;-60;-50;120;100"/>
+        </state>
+    </state>
+</scxml>

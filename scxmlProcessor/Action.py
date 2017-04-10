@@ -31,12 +31,11 @@ class Action:
             o = i.find(keyAction)
             if o != None:
                 for a in o:
-                    if a.tag in ["raise", "send"]:
+                    if a.tag in ["raise", "send"] and a.attrib:
                         action[i.get("id")][a.tag] += [a.attrib["event"]]
         self.actions[keyAction] = action
 
     def getOnentryAction(self, actions, key ):
-        print(self.actions)
         return self.actions[actions][key]
 
 

@@ -109,4 +109,4 @@ class Generator:
 
 if __name__ == '__main__':
     os.system("cd ../Test/ressource && rm *.py")
-    generator = Generator("../Test/raise_test.scxml").generateSources("../Test/ressource/")
+    generator = Generator("../Test/raise_testLarge.scxml").generateSources("../Test/ressource/")
