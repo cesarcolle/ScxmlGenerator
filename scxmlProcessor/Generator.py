@@ -1,6 +1,5 @@
 ####  Generator class will generate via Cheetah template some files .
 import os
-
 from scxml.node import Transition
 from subprocess import call
 

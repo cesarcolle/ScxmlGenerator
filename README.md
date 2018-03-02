@@ -68,7 +68,7 @@ For example if you want to change the OnentryAction for  state "test", you must 
 
 Where fct is a function pointer.
 
-Now enjoy the Finite State Machine Generate
+Now enjoy the Finite State Machine Generated
 
 
 ##############################################################
