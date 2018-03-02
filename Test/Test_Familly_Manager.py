@@ -7,6 +7,7 @@ class state:
     def __init__(self, id, state):
         self.id = id
         self.state = state
+        self.initial = None
 
 
 dataTest = {'s2': state("s2", [state("s3", [])]),

@@ -16,4 +16,4 @@ class Loader:
 
 
 if __name__ == "__main__":
-    l = Loader("../Test/send_event.scxml")
+    l = Loader("../Test/ressource/send_event.scxml")

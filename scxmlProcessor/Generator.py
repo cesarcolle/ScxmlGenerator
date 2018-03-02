@@ -1,25 +1,27 @@
 ####  Generator class will generate via Cheetah template some files .
+import os
+
 from scxml.node import Transition
+from subprocess import call
 
 from scxmlProcessor.Action import Action
 from scxmlProcessor.FamillyManager import FamillyManager
 from scxmlProcessor.Loader import Loader
+from scxmlProcessor.TransitionManager import TransitionManager
 from templateGenerator.TemplateProvider import TemplateProvider
-from templateGenerator.TransitionManager import TransitionManager
 
-import os
-
-templatesFiles = {"state_source": "state_generic_template.tmpl", \
-                  "event": "event_template.tmpl", \
-                  "state_header": "state_generic_header_state.tmpl", \
-                  "main": "mainSmProcessus.tmpl", \
-                  "sharedStruture": "sharedStructure.tmpl"}
+templatesFiles = {"state_source": "./templateGenerator/state_generic_template.tmpl", \
+                  "event": "./templateGenerator/event_template.tmpl", \
+                  "state_header": "./templateGenerator/state_generic_header_state.tmpl", \
+                  "main": "./templateGenerator/mainSmProcessus.tmpl", \
+                  "sharedStruture": "./templateGenerator/sharedStructure.tmpl"}
 
 
 class Generator:
 
     def __init__(self, path):
         self.loader = Loader(path)
+
         self.actions = Action(path)
         self.data = dict()
         self.parent = dict()
@@ -36,7 +38,7 @@ class Generator:
             outputFile.write(str(template))
             outputFile.close()
         except IOError:
-            print("erreur opening file")
+            print("erreur opening file Generator :" + fileName )
 
     def generateTransition(self):
         # recover transition from the initial state.
@@ -58,14 +60,13 @@ class Generator:
             # using set because we don't want twice similiar value into our event
             self.events.add(flatList[0])
 
-    def generateSources(self, directory):
+    def generateSources(self, directory, directoryTemplate = "./"):
 
         #   del self.loader.data["__main__"]
         allNameState = list()
         templates = ""
         statement = {"statement" : []}
         for state in self.data:
-            name = directory + "SM_" + state
             v = ""
             if self.data[state]:
                 v = self.data[state]
@@ -95,18 +96,15 @@ class Generator:
         self.generateOutputFile(directory + "sharedStruture.py",
                                 self.tmpl.provideTemplate(templatesFiles["sharedStruture"], \
                                                           {"fathers": self.familly.takeAllFather()}))
-        self.generateOutputFile(directory + "fsm.py", templates)
 
-        self.generateOutputFile(directory + "fsm.py", self.tmpl.provideTemplate(templatesFiles["state_source"], statement))
+        self.generateOutputFile(directory + "fsm.py", self.tmpl.provideTemplate(templatesFiles["state_source"],
+                                                                                statement))
         mainValue = self.tmpl.provideTemplate(templatesFiles["main"],
                                   {"states": allNameState,
                                    "ancestor": self.ancestor})
         self.generateOutputFile(directory + "fsm.py", mainValue, option='a')
 
-    def generateHierarchy(self):
-        pass
-
 
 if __name__ == '__main__':
-    os.system("cd ../Test/ressource && rm *.py")
-    generator = Generator("../Test/raise_testLarge.scxml").generateSources("../Test/ressource/")
+    os.system("cd ../output && rm *.py")
+    Generator("../Test/ressource/raise_test.scxml").generateSources("../output/")

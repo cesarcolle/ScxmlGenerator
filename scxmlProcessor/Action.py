@@ -8,8 +8,21 @@ import xml.etree.ElementTree as ET
 actionsTook = ["onentry", "onexit"]
 
 class Action:
+
+    # There is a problem with the Pyscxml library. we juste have function pointer of onentry
+    # onexit relation, so we have to catch these data with the python library etree.
+    # but etree is old. So tu handle xml namespace, the best way stay to remove namespace call.
+
+
     def __init__(self,  pathToScxml):
-        it = ET.iterparse(StringIO(str(open(pathToScxml).read())))
+        value = ""
+        try:
+            value = str(open(pathToScxml).read())
+        except IOError:
+            print("error openning file in action = " + pathToScxml)
+        # parse XML
+        it = ET.iterparse(StringIO(value))
+        # remove namespace call
         for _, el in it:
             if '}' in el.tag:
                 el.tag = el.tag.split('}', 1)[1]  # strip all namespaces
@@ -21,6 +34,7 @@ class Action:
     def sendEvent(self, sendAttrib):
         pass
 
+    # catch all onentry / onexit actions from the xml given.
     def initAction(self, keyAction):
         self.actions[keyAction] = dict()
         action = self.actions[keyAction]
@@ -42,5 +56,5 @@ class Action:
 
 
 if __name__ == '__main__':
-    a = Action("../Test/send_event.scxml")
+    a = Action("../Test/goal.scxml")
     print(a.actions)
