@@ -1,0 +1,17 @@
+
+
+#{from itertools import izip}
+
+statesItem = {
+#for attribut in $states[:-1]
+"$attribut" : SM_${attribut}(),
+ #end for
+ "$states[-1]" : SM_${states[-1]}()
+}
+
+if __name__ == "__main__":
+    #for state in $states
+    SM.register(SM_$state)
+    #end for
+    stateMachine = statesItem["$ancestor"]
+    stateMachine = stateMachine.sendEvent("t1")

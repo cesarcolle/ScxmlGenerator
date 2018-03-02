@@ -1,0 +1,123 @@
+
+from sharedStruture import sendQueue
+
+import abc
+
+class SM:
+    __metaclass__ = abc.ABCMeta
+
+    def start(self):
+        raise NotImplementedError()
+
+    def onentry(self):
+        raise NotImplementedError()
+
+    def sendEvent(self, event):
+        raise NotImplementedError()
+
+
+#for s in $statement
+
+#if len($s["parent"]) > 0
+from sharedStruture import RaiseQueue_$s["parent"][0]
+#end if
+class SM_$s["nom"] (SM):
+    def __init__(self):
+        self.onentryAction = lambda f : None
+        self.onentryActions = lambda f : None
+        self.transitions = $s["transition"]
+        self.passed = True
+        pass
+
+    def log(self):
+        pass
+
+    def onentryAction(self, f):
+        self.onentryAction = f
+
+    def onexitAction(self, f):
+        self.onexitAction = f
+
+    def onentry(self, params=None):
+        pass
+        print("One entry $s["nom"] ")
+        self.onentryAction(params)
+        #for e in $s["onentry"]
+        #if len($s["onentry"][$e] ) > 0
+        #for ac in $s["onentry"][$e]
+        #if $e == "send":
+        return self.${e}Event("$ac")
+        #else
+        self.${e}Event("$ac")
+        #end if
+        #end for
+        #end if
+        #end for
+        #if len($s["parent"]) > 0
+        if not RaiseQueue_${$s["parent"][0]}.empty() :
+            return self.sendEvent(RaiseQueue_${$s["parent"][0]}.get())
+        #end if
+
+    def onexit(self, params=None):
+        #for e in $s["onexit"]
+        #if len($s["onexit"][$e] ) > 0
+        #for ac in $s["onexit"][$e]
+        self.${e}Event("$ac")
+        #end for
+        #end if
+        #end for
+        # self.onexitAction(params)
+        if not sendQueue.empty() :
+            return self.sendEvent(sendQueue.get())
+        #if len($s["parent"]) > 0
+        if not RaiseQueue_${$s["parent"][0]}.empty() :
+            return self.sendEvent(RaiseQueue_${$s["parent"][0]}.get())
+        #end if
+
+
+    def raiseEvent(self, event):
+        pass
+    #if len($s["parent"]) > 0
+        RaiseQueue_${$s["parent"][0]}.put(event)
+    #end if
+
+    def jump(self, event):
+        self.passed = False
+        if event in self.transitions :
+            print(event, " event in ", "$s["nom"]")
+            return self.sendEvent(event)
+        else:
+            pass
+        #if  len($s["parent"]) > 0
+            return statesItem["${$s["parent"][0]}"].jump(event)
+        #else
+            return None
+        #end if
+
+    def sendEvent(self, event):
+        pass
+        self.onexit()
+        #if s["childToBegin"] is not None
+        if self.passed :
+            state = statesItem["${$s["childToBegin"][0]}"].jump(event)
+            print("semi-succes")
+            print("state retourned by onentry : ", state)
+            if state is not None:
+                print("retourne le onentry new element")
+                return state
+        #end if
+        self.passed = True
+        #if len(s["transition"]) > 0
+        if event in self.transitions:
+            direct = statesItem[self.transitions[event]].onentry()
+            if direct != None:
+                return direct
+            return statesItem[self.transitions[event]]
+        else:
+            pass
+        #if  len($s["parent"]) > 0
+            return statesItem["${$s["parent"][0]}"].jump(event)
+        #end if
+        #end if
+
+#end for
